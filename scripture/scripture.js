@@ -69,7 +69,6 @@
             super();
             console.group("ScripturePassage Constructor:");
             console.debug(this);
-
             const template = document.createElement('template');
             template.innerHTML += `
                 ${styleString}
@@ -92,8 +91,6 @@
 
         connectedCallback() {
             console.group("ScripturePassage ConnectedCallback:");
-
-            console.debug("api attribute:", this.getAttribute("api"))
             this.addEventListener('mousedown', this._mouseDown);
             console.groupEnd();
         }
