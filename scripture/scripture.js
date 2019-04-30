@@ -70,28 +70,30 @@
         constructor() {
             super();
             console.group("ScripturePassage Constructor:");
-            console.log(this);
+            console.debug(this);
 
             const template = document.createElement('template');
             template.innerHTML += `
-${styleString}
-<summary id="reference">${this.reference}</summary>
-<div id="text"></div>
+                ${styleString}
+                <summary id="reference">${this.reference}</summary>
+                <div id="text"></div>
             `;
             this.attachShadow({mode: 'open'});
             this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-            if (this.hasAttribute("api")) {
-                this.api = eval(this.getAttribute("api"));
-            }
-
+            this.passages = undefined;
             console.groupEnd();
         }
 
         connectedCallback() {
             console.group("ScripturePassage ConnectedCallback:");
 
-            this.addEventListener('click', this._onClick);
+
+            console.debug("api attribute:", this.getAttribute("api"))
+            if (this.hasAttribute("api")) {
+                this.api = eval(this.getAttribute("api"));
+            }
+            this.addEventListener('mousedown', this._mouseDown);
             console.groupEnd();
         }
 
@@ -101,12 +103,21 @@ ${styleString}
 
 
 
-        _onClick(event) {
-            console.group("onClick");
-            console.log(event.path[0].tagName);
-            if ('SUMMARY' === event.path[0].tagName) {
-                console.log("toggling [open]");
+        _mouseDown(event) {
+            if (!this.api) return; //maybe toggle the .open??
+
+            console.group("mouseDown", event);
+            if (this.passages.length !== 0) {
                 this.open = !this.open;
+            } else {
+                if ('SUMMARY' === event.path[0].tagName) {
+                    this.api.query(this.reference)
+                        .then(passages => {
+                            this.passages = passages;
+                            console.debug("toggling [open]");
+                            this.open = !this.open;
+                        });
+                }
             }
             console.groupEnd();
         }
@@ -133,13 +144,26 @@ ${styleString}
             }
         }
 
-        set api(val) {
-            if (typeof val === 'function') {
-                this.api = new val();
+        get passages() {
+            return this.shadowRoot.querySelectorAll('#text > *');
+        }
+
+        set passages(val) {
+            const textNode = this.shadowRoot.querySelector('#text');
+            if (val instanceof String) {
+                textNode.innerHTML = val;
+            }
+
+            if (val instanceof Element) {
+                textNode.insertAdjacentElement('beforeend', val);
+            }
+
+            if (Array.isArray(val)) {
+                val.forEach(passage => textNode.insertAdjacentElement('beforeend', passage));
             }
         }
-    }
 
+    }
 
     window.customElements.define('scripture-passage', ScripturePassage);
 })();

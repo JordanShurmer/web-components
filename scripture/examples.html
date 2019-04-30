@@ -36,11 +36,18 @@
 
     <h3>Simple use case</h3>
 
-    <scripture-passage api="Crossway" reference="Acts 17:24-25">
+    <scripture-passage api="crosswayApi" reference="Acts 17:24-25">
     </scripture-passage>
 </main>
 
 
 <script src="crossway.js"></script>
+<script>
+    var crosswayApi = new Crossway('a0e122c0b20aee5601d9a6ea50e16194f5131eda');
+</script>
+
 <script src="scripture.js"></script>
+<script>
+    window.customElements.get('scripture-passage').api = new Crossway('a0e122c0b20aee5601d9a6ea50e16194f5131eda');
+</script>
 </body>
