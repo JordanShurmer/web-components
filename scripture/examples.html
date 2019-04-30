@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Scripture | Web Components</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans|Noto+Serif" rel="stylesheet">
+
+    <style>
+        main {
+            max-width: 640px;
+            margin: auto;
+            font-family: 'Noto Sans', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Noto Serif', serif;
+        }
+    </style>
+
+</head>
+<body>
+
+<main>
+
+    <h1 id="overview">Overview</h1>
+
+    A set of Web Components dealing with Scripture texts (i.e. the bible). See <a href="./README.md">the docs</a> for details.
+
+    <h2>Examples</h2>
+
+    View-Source / Inspect to see the markup
+
+    <h3>Simple use case</h3>
+
+    <scripture-passage api="Crossway" reference="Acts 17:24-25">
+    </scripture-passage>
+</main>
+
+
+<script src="crossway.js"></script>
+<script src="scripture.js"></script>
+</body>
