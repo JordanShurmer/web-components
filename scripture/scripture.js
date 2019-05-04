@@ -9,7 +9,7 @@
             display: none;
         }
     </style>
-    <slot name="list"></slot>
+    <slot></slot>
     `;
 
     class ScriptureList extends HTMLElement {

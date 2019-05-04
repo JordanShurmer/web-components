@@ -17,12 +17,7 @@
             font-family: 'Noto Sans', sans-serif;
         }
 
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
+        h1, h2, h3, h4, h5, h6 {
             font-family: 'Noto Serif', serif;
         }
     </style>
@@ -50,35 +45,30 @@
 
                 <h3>Simple use case</h3>
 
-                <code-block lang="html" readOnly>
-                    <pre>&#x3C;scripture-passage api=&#x22;crosswayApi&#x22; reference=&#x22;Acts 17:24-25&#x22;&#x3E;
-&#x3C;/scripture-passage&#x3E;</pre>
-                </code-block>
-
                 <scripture-passage api="crosswayApi" reference="Acts 17:24-25">
                 </scripture-passage>
 
-                <h3>Open by default</h3>
+                <pre><code class="language-html">&#x3C;scripture-passage api=&#x22;crosswayApi&#x22; reference=&#x22;Acts 17:24-25&#x22;&#x3E;
+&#x3C;/scripture-passage&#x3E;</code></pre>
 
-                <code-block lang="html" readOnly>
-                    <pre>&#x3C;scripture-passage open api=&#x22;crosswayApi&#x22; reference=&#x22;2 Corinthians 10:17-18&#x22;&#x3E;
-&#x3C;/scripture-passage&#x3E;</pre>
-                </code-block>
+                <h3>Open by default</h3>
 
                 <scripture-passage open api="crosswayApi" reference="2 Corinthians 10:17-18">
                 </scripture-passage>
 
+                <pre><code class="language-html">&#x3C;scripture-passage open api=&#x22;crosswayApi&#x22; reference=&#x22;2 Corinthians 10:17-18&#x22;&#x3E;
+&#x3C;/scripture-passage&#x3E;</code></pre>
+
                 <h3>Multiple Passages</h3>
 
-                <code-block lang="html" readOnly>
-                    <pre>&#x3C;scripture-passage
+                <scripture-passage open api="crosswayApi" reference="Genesis 45:5-8, Genesis 50:20">
+                </scripture-passage>
+
+                <pre><code class="language-html">&#x3C;scripture-passage
+            open
             api=&#x22;crosswayApi&#x22;
             reference=&#x22;Genesis 45:5-8, Genesis 50:20&#x22;&#x3E;
-&#x3C;/scripture-passage&#x3E;</pre>
-                </code-block>
-
-                <scripture-passage api="crosswayApi" reference="Genesis 45:5-8, Genesis 50:20">
-                </scripture-passage>
+&#x3C;/scripture-passage&#x3E;</code></pre>
 
                 <h2>Scripture List</h2>
     </main>
@@ -94,8 +84,6 @@
         window.customElements.get('scripture-passage').api = new Crossway('a0e122c0b20aee5601d9a6ea50e16194f5131eda');
     </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.4/ace.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.4/mode-html.js"></script>
-
-    <script src="../code-block/code-block.js"></script>
+    <link rel="stylesheet" href="../prism.css">
+    <script src="../prism.js" defer></script>
 </body>
