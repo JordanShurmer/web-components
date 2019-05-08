@@ -17,7 +17,12 @@
             font-family: 'Noto Sans', sans-serif;
         }
 
-        h1, h2, h3, h4, h5, h6 {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
             font-family: 'Noto Serif', serif;
         }
     </style>
@@ -30,49 +35,62 @@
 
         <h1 id="overview">Overview</h1>
 
-        A set of Web Components dealing with Scripture texts (i.e. the bible). See <a href="./README.md">the docs</a>
-        for details.
+        <p>
+            A set of Web Components dealing with Scripture texts (i.e. the bible). See <a href="./README.md">the
+                docs</a>
+            for details.
+        </p>
         <p>
             View-Source / Inspect to see the markup
+        </p>
 
-            <h2>Scripture Passage</h2>
+        <h2>Scripture Passage</h2>
 
-            <code>&#x3C;scripture-passage&#x3E;</code> puts a passage of scripture on the page. You provide a
-            <code>reference</code> and an <code>api</code>.
-            <p>
-
+        <code>&#x3C;scripture-passage&#x3E;</code> puts a passage of scripture on the page. You provide a
+        <code>reference</code> and an <code>api</code>.
 
 
-                <h3>Simple use case</h3>
 
-                <scripture-passage api="crosswayApi" reference="Acts 17:24-25">
-                </scripture-passage>
+        <h3>Simple use case</h3>
 
-                <pre><code class="language-html">&#x3C;scripture-passage api=&#x22;crosswayApi&#x22; reference=&#x22;Acts 17:24-25&#x22;&#x3E;
+        <scripture-passage api="crosswayApi" reference="Acts 17:24-25">
+        </scripture-passage>
+
+        <pre><code class="language-html">&#x3C;scripture-passage api=&#x22;crosswayApi&#x22; reference=&#x22;Acts 17:24-25&#x22;&#x3E;
 &#x3C;/scripture-passage&#x3E;</code></pre>
 
-                <h3>Open by default</h3>
+        <h3>Open by default</h3>
 
-                <scripture-passage open api="crosswayApi" reference="2 Corinthians 10:17-18">
-                </scripture-passage>
+        <scripture-passage open api="crosswayApi" reference="2 Corinthians 10:17-18">
+        </scripture-passage>
 
-                <pre><code class="language-html">&#x3C;scripture-passage open api=&#x22;crosswayApi&#x22; reference=&#x22;2 Corinthians 10:17-18&#x22;&#x3E;
+        <pre><code class="language-html">&#x3C;scripture-passage open api=&#x22;crosswayApi&#x22; reference=&#x22;2 Corinthians 10:17-18&#x22;&#x3E;
 &#x3C;/scripture-passage&#x3E;</code></pre>
 
-                <h3>Multiple Passages</h3>
+        <h3>Multiple Passages</h3>
 
-                <scripture-passage open api="crosswayApi" reference="Genesis 45:5-8, Genesis 50:20">
-                </scripture-passage>
+        <scripture-passage open api="crosswayApi" reference="Genesis 45:5-8, Genesis 50:20">
+        </scripture-passage>
 
-                <pre><code class="language-html">&#x3C;scripture-passage
+        <pre><code class="language-html">&#x3C;scripture-passage
             open
             api=&#x22;crosswayApi&#x22;
             reference=&#x22;Genesis 45:5-8, Genesis 50:20&#x22;&#x3E;
 &#x3C;/scripture-passage&#x3E;</code></pre>
 
-                <h2>Scripture List</h2>
-    </main>
+        <h2>Scripture List</h2>
 
+        <p>
+            <code>&lt;scripture-list&gt;</code> allows you to add multiple scripture passages to the page, and
+            expand or collapse all of them together
+        </p>
+
+        <scripture-list
+            api="crosswayApi"
+            reference-list='["2 Timothy 1:9", "James 1:18"]'
+        ></scripture-list>
+
+    </main>
 
     <script src="crossway.js"></script>
     <script>

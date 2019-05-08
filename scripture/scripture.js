@@ -1,6 +1,6 @@
 (function () {
-    const template = document.createElement('template');
-    template.innerHTML = `
+    const tmpl = document.createElement('template');
+    tmpl.innerHTML = `<div></div>
     <style lang="css">
         :host {
             display: block;
@@ -8,22 +8,63 @@
         :host[hidden] {
             display: none;
         }
+        scripture-passage:not(:first-of-type) {
+            border-top: 1px solid rgba(0, 0, 0, 0.2);
+        }
     </style>
-    <slot></slot>
     `;
 
     class ScriptureList extends HTMLElement {
         constructor() {
             super();
-
             console.group("ScriptureList Constructor:");
-
-            this.attachShadow({mode: 'open'});
-            console.trace("attaching shadowRoot", {"shadowRoot": this.shadowRoot, template});
-            this.shadowRoot.appendChild(template.content.cloneNode(true));
+            this.attachShadow({
+                mode: 'open'
+            });
+            this.shadowRoot.appendChild(tmpl.content.cloneNode(true));
             console.groupEnd();
         }
 
+        connectedCallback() {
+            console.group("ScriptureList ConnectedCallback:");
+            const api = eval(this.getAttribute("api"));
+            for (let reference of this.referenceList) {
+                console.debug({
+                    reference
+                })
+                const passage = document.createElement('scripture-passage');
+                passage.api = api;
+                passage.reference = reference;
+
+                console.debug("Adding a new passage", {
+                    passage,
+                    "firstChild": this.shadowRoot.firstChild
+                });
+                this.shadowRoot.firstChild.appendChild(passage);
+            }
+            console.groupEnd();
+        }
+
+        get referenceList() {
+            let list = this.getAttribute('reference-list');
+            try {
+                list = JSON.parse(list);
+            } catch (err) {
+                console.error("scripture-list: could not be parse", {
+                    list,
+                    err
+                })
+                list = [];
+            }
+            if (!Array.isArray(list)) {
+                list = [list];
+            }
+            return list;
+        }
+
+        set referenceList(list) {
+            this.setAttribute('reference-list', JSON.stringify(list));
+        }
     }
 
     window.customElements.define('scripture-list', ScriptureList);
@@ -44,6 +85,7 @@
             display: inline-block;
             width: 25px;
         }
+
         :host([open]) #reference::before {
             content: '⏷';
         }
@@ -52,14 +94,31 @@
             display: none;
         }
 
-        :host #text:empty::after {
-            content: 'Loading...';
-        }
-
         :host([open]) #text {
             display: block;
             padding-left: 25px;
         }
+
+        :host #text:empty::after {
+            content: 'Loading...';
+        }
+
+        summary {
+            cursor: pointer;
+        }
+
+        .context {
+            display: none;
+            text-decoration: none;
+            padding-left: 12px;
+            font-size: small;
+            vertical-align: baseline;
+        }
+
+        :host([open]) .context {
+            display: inline;
+        }
+
     </style>
     `;
 
@@ -75,10 +134,17 @@
                 <summary id="reference">${this.reference}</summary>
                 <div id="text"></div>
             `;
-            this.attachShadow({mode: 'open'});
+            this.attachShadow({
+                mode: 'open'
+            });
             this.shadowRoot.appendChild(template.content.cloneNode(true));
+            console.groupEnd();
+        }
 
-            if (this.hasAttribute("api")) {
+        connectedCallback() {
+            console.group("ScripturePassage ConnectedCallback:");
+
+            if (!this.api && this.hasAttribute("api")) {
                 this.api = eval(this.getAttribute("api"));
             }
 
@@ -86,19 +152,20 @@
             if (this.open) {
                 this._query();
             }
-            console.groupEnd();
-        }
-
-        connectedCallback() {
-            console.group("ScripturePassage ConnectedCallback:");
             this.addEventListener('mousedown', this._mouseDown);
+
+            const summary = this.shadowRoot.querySelector('summary');
+            const contextLink = this.api.linkTo(this.reference);
+            contextLink.classList.add('context');
+            contextLink.innerText = ' see context';
+            summary.appendChild(contextLink);
+
             console.groupEnd();
         }
 
         disconnectedCallback() {
             this.api = null;
         }
-
 
         _query() {
             return this.api.query(this.reference)
@@ -109,20 +176,26 @@
 
         _mouseDown(event) {
             if (!this.api) return; //maybe toggle the .open??
+            console.group("mouseDown");
 
-            console.group("mouseDown", event);
-            if (this.passages.length !== 0) {
-                this.open = !this.open;
-            } else {
-                if ('SUMMARY' === event.path[0].tagName) {
-                    this._query().then(() => this.open = !this.open);
+            if (event.path[0].tagName === 'A') {
+                return;
+            }
+
+            //only responde to left mouse click
+            if (event.button === 0) {
+                if (this.passages.length !== 0) {
+                    this.open = !this.open;
+                } else {
+                    if ('SUMMARY' === event.path[0].tagName) {
+                        this._query().then(() => this.open = !this.open);
+                    }
                 }
             }
             console.groupEnd();
         }
 
 
-        
         get reference() {
             return this.getAttribute("reference");
         }
@@ -166,4 +239,3 @@
 
     window.customElements.define('scripture-passage', ScripturePassage);
 })();
-

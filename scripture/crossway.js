@@ -20,6 +20,13 @@ class Crossway {
         this.authorizationToken = authorizationToken;
     }
 
+    linkTo(reference) {
+        const aTag = document.createElement('a');
+        aTag.href = `//esv.to/${reference}`;
+        aTag.target = "_blank";
+        return aTag;
+    }
+
     query(reference) {
         function htmlStringToElement(htmlString) {
             const tmplt = document.createElement('template');
