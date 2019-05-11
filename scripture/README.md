@@ -12,8 +12,8 @@ A specific passage of scripture:
 ```html
 A list of scripture passages:
 <scripture-list
-    api="crosswayApi"
-    reference-list='["2 Timothy 1:9", "James 1:18"]'
+  api="crosswayApi"
+  reference-list='["2 Timothy 1:9", "James 1:18"]'
 ></scripture-list>
 ```
 
@@ -25,6 +25,10 @@ A list of scripture passages:
 `<scripture-passage> class: ScripturePassage`
 
 Render a passage of scripture. 
+
+```html
+<scripture-passage open api="crosswayApi" reference="Acts 17:24-25"><scripture-passage>
+```
 
 ## Attributes
 
@@ -56,6 +60,15 @@ passage.open = true;
 `<scripture-list> class: ScriptureList`
 
 Render a list scripture passages. With an expand/collapse all link.
+
+```html
+A list of scripture passages:
+<scripture-list
+  open
+  api="crosswayApi"
+  reference-list='["2 Timothy 1:9", "James 1:18"]'
+></scripture-list>
+```
 
 ### Attributes
 

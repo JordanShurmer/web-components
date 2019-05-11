@@ -1,0 +1,20 @@
+{
+  "name": "web-components-scripture",
+  "version": "1.0.0",
+  "description": "A set of web components for interacting with Christian Scripture",
+  "main": "scripture.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/JordanShurmer/web-components/scripture"
+  },
+  "keywords": [
+    "web-components",
+    "scripture",
+    "bible"
+  ],
+  "author": "Jordan Shurmer <jordan@shurmer.family>",
+  "license": "CC0-1.0"
+}
