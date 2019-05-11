@@ -10,7 +10,4 @@ Each sub-directory will be it's own web component. My goal is for each component
 * [scripture things](./scripture)
   * `<scripture-list>`
   * `<scripture-passage>`
-      * `<scripture-reference>`
-      * `<scripture-text>`
-      * `<scripture-version>`
 
