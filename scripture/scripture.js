@@ -11,6 +11,16 @@
         scripture-passage:not(:first-of-type) {
             border-top: 1px solid rgba(0, 0, 0, 0.2);
         }
+        :host::before {
+            content: 'expand all';
+            font-size: .825rem;
+            opacity: .8;
+            display: block;
+            float: right;
+          }
+          :host([open])::before {
+              content: 'collapse all';
+          }
     </style>
     `;
 
@@ -28,6 +38,7 @@
         connectedCallback() {
             console.group("ScriptureList ConnectedCallback:");
             const api = eval(this.getAttribute("api"));
+            this.addEventListener('click', this._click);
             for (let reference of this.referenceList) {
                 console.debug({
                     reference
@@ -41,6 +52,20 @@
                     "firstChild": this.shadowRoot.firstChild
                 });
                 this.shadowRoot.firstChild.appendChild(passage);
+            }
+            console.groupEnd();
+        }
+
+        _click(event) {
+            console.group("ScriptureList click");
+            console.debug({
+                event
+            });
+            if (this === event.path[0]) {
+                this.open = !this.open;
+                this.shadowRoot.querySelectorAll('scripture-passage').forEach((passage) => {
+                    passage.open = this.open
+                });
             }
             console.groupEnd();
         }
@@ -64,6 +89,18 @@
 
         set referenceList(list) {
             this.setAttribute('reference-list', JSON.stringify(list));
+        }
+
+        get open() {
+            return this.hasAttribute('open');
+        }
+
+        set open(val) {
+            if (val) {
+                this.setAttribute("open", "");
+            } else {
+                this.removeAttribute("open");
+            }
         }
     }
 
@@ -178,19 +215,9 @@
             if (!this.api) return; //maybe toggle the .open??
             console.group("mouseDown");
 
-            if (event.path[0].tagName === 'A') {
-                return;
-            }
-
             //only responde to left mouse click
-            if (event.button === 0) {
-                if (this.passages.length !== 0) {
-                    this.open = !this.open;
-                } else {
-                    if ('SUMMARY' === event.path[0].tagName) {
-                        this._query().then(() => this.open = !this.open);
-                    }
-                }
+            if (event.button === 0 && 'SUMMARY' === event.path[0].tagName) {
+                this.open = !this.open;
             }
             console.groupEnd();
         }
@@ -210,6 +237,8 @@
 
         set open(val) {
             if (val) {
+                //initialize our passages when needed
+                if (this.passages.length === 0) this._query();
                 this.setAttribute('open', '');
             } else {
                 this.removeAttribute('open');

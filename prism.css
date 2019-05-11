@@ -11,7 +11,7 @@ pre[class*="language-"] {
 	color: #f8f8f2;
 	background: none;
 	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
-	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-family: 'Fira Mono', monospace;
 	font-size: 1em;
 	text-align: left;
 	white-space: pre;
@@ -130,7 +130,7 @@ pre[class*="language-"] {
 script[type='text/plain'][class*='lang-'],
 script[type='text/plain'][class*='language-'] {
 	display: block;
-	font: 100% Consolas, Monaco, monospace;
+	font: 100% 'Fira Mono', monospace;
 	white-space: pre;
 	overflow: auto;
 }

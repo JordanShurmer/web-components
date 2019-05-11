@@ -8,22 +8,69 @@
 
     <title>Scripture | Web Components</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans|Noto+Serif" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans|Noto+Serif|Fira+Mono" rel="stylesheet">
 
     <style>
         main {
             max-width: 640px;
             margin: auto auto 10em;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        pre,code {
+            font-family: 'Fira Mono', monospace;
+        }
+
+        body {
+            background-color: white;
             font-family: 'Noto Sans', sans-serif;
+            font-weight: 400;
+            line-height: 1.45;
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 1.25em;
         }
 
         h1,
         h2,
         h3,
         h4,
-        h5,
-        h6 {
+        h5 {
+            margin: 2.75rem 0 1rem;
             font-family: 'Noto Serif', serif;
+            font-weight: 400;
+            line-height: 1.15;
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 1.802em;
+        }
+
+        h2 {
+            font-size: 1.602em;
+        }
+
+        h3 {
+            font-size: 1.424em;
+        }
+
+        h4 {
+            font-size: 1.266em;
+        }
+
+        h5 {
+            font-size: 1.125em;
+        }
+
+        small,
+        .text_small {
+            font-size: 0.889em;
         }
     </style>
 
@@ -44,7 +91,13 @@
             View-Source / Inspect to see the markup
         </p>
 
-        <h2>Scripture Passage</h2>
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#scripture-passage"><code>scripture-passage</code></a></li>
+            <li><a href="#scripture-list"><code>scripture-list</code></a></li>
+        </ul>
+
+        <h2 id="scripture-passage">Scripture Passage</h2>
 
         <code>&#x3C;scripture-passage&#x3E;</code> puts a passage of scripture on the page. You provide a
         <code>reference</code> and an <code>api</code>.
@@ -64,7 +117,10 @@
         <scripture-passage open api="crosswayApi" reference="2 Corinthians 10:17-18">
         </scripture-passage>
 
-        <pre><code class="language-html">&#x3C;scripture-passage open api=&#x22;crosswayApi&#x22; reference=&#x22;2 Corinthians 10:17-18&#x22;&#x3E;
+        <pre><code class="language-html">&#x3C;scripture-passage
+    open
+    api=&#x22;crosswayApi&#x22;
+    reference=&#x22;2 Corinthians 10:17-18&#x22;&#x3E;
 &#x3C;/scripture-passage&#x3E;</code></pre>
 
         <h3>Multiple Passages</h3>
@@ -73,22 +129,31 @@
         </scripture-passage>
 
         <pre><code class="language-html">&#x3C;scripture-passage
-            open
-            api=&#x22;crosswayApi&#x22;
-            reference=&#x22;Genesis 45:5-8, Genesis 50:20&#x22;&#x3E;
+    open
+    api=&#x22;crosswayApi&#x22;
+    reference=&#x22;Genesis 45:5-8, Genesis 50:20&#x22;&#x3E;
 &#x3C;/scripture-passage&#x3E;</code></pre>
 
-        <h2>Scripture List</h2>
+        <h2 id="scripture-list">Scripture List</h2>
 
         <p>
             <code>&lt;scripture-list&gt;</code> allows you to add multiple scripture passages to the page, and
             expand or collapse all of them together
         </p>
 
-        <scripture-list
-            api="crosswayApi"
-            reference-list='["2 Timothy 1:9", "James 1:18"]'
-        ></scripture-list>
+        <p>
+            <strong>note:</strong> you must use single quotes around the reference-list attribute value, so that you can use proper JSON double quotes in the value
+        </p>
+
+        <pre><code class="language-html">&#x3C;scripture-list
+    api=&#x22;crosswayApi&#x22;
+    reference-list=&#x27;[&#x22;2 Timothy 1:9&#x22;, &#x22;James 1:18&#x22;]&#x27;&#x3E;
+&#x3C;/scripture-list&#x3E;</code></pre>
+
+<scripture-list
+    api="crosswayApi"
+    reference-list='["2 Timothy 1:9", "James 1:18"]'>
+</scripture-list>
 
     </main>
 
