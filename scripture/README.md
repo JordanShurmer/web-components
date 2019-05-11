@@ -4,7 +4,7 @@ This is a set of web components for dealing with Scripture passages (i.e. the Ch
 
 ```html
 A specific passage of scripture:
-<scripture-passage api="crosswayApi" reference="Acts 17:24-25"><scripture-passage>
+<scripture-passage api="crosswayApi" reference="Acts 17:24-25"><scripture->
   ```
 
 ![scripture-passage](./scripture-passage-open.JPG?raw=true)
@@ -18,6 +18,24 @@ A list of scripture passages:
 ```
 
 ![scripture-list](./scripture-list-open.JPG?raw=true)
+
+## Usage
+
+```html
+<scripture-passage api="crosswayApi" reference="Isaiah 48:9-11"></scripture-passage>
+
+<scripture-list api="crosswayApi" reference-list='["Isaiah 48:9-11", "John 3:16"]'"></scripture->
+
+<!-- Load the crossway API (or provide your own, see below) -->
+<script src="https://cdn.jsdelivr.net/npm/web-components-scripture@1/crossway.js"></script>
+<script>
+    //create the 'crosswayApi' object being referenced
+    const crosswayApi = new Crossway('your-token-here');
+</script>
+<!-- Load the web components -->
+<script src="https://cdn.jsdelivr.net/npm/web-components-scripture@1/scripture.js"></script>
+```
+
 
 
 ## Scripture Passage
