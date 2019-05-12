@@ -1,16 +1,19 @@
 # Scripture Web Components
 
+
 This is a set of web components for dealing with Scripture passages (i.e. the Christian bible). These web components rely on the existence of an API for looking up scripture passages. An implementation which uses Crossway's ESV Api exists in [crossway.js](./crossway.js) (see [the api](#the-api) section for details). 
 
-```html
+## Quick Look:
+
 A specific passage of scripture:
+```html
 <scripture-passage api="crosswayApi" reference="Acts 17:24-25"><scripture->
   ```
 
 ![scripture-passage](./scripture-passage-open.JPG?raw=true)
 
-```html
 A list of scripture passages:
+```html
 <scripture-list
   api="crosswayApi"
   reference-list='["2 Timothy 1:9", "James 1:18"]'
@@ -19,13 +22,10 @@ A list of scripture passages:
 
 ![scripture-list](./scripture-list-open.JPG?raw=true)
 
-## Usage
+## Install
 
+Direct reference:
 ```html
-<scripture-passage api="crosswayApi" reference="Isaiah 48:9-11"></scripture-passage>
-
-<scripture-list api="crosswayApi" reference-list='["Isaiah 48:9-11", "John 3:16"]'"></scripture->
-
 <!-- Load the crossway API (or provide your own, see below) -->
 <script src="https://cdn.jsdelivr.net/npm/web-components-scripture@1/crossway.js"></script>
 <script>
@@ -35,6 +35,22 @@ A list of scripture passages:
 <!-- Load the web components -->
 <script src="https://cdn.jsdelivr.net/npm/web-components-scripture@1/scripture.js"></script>
 ```
+
+NPM: This is an NPM package, but I have not tested out including this via NPM.
+```bash
+npm install --save web-components-scripture
+```
+
+```javascript
+//totally untested, but something like:
+require('web-components-scripture/crossway.js')
+const crosswayApi = new Crossway('your-token-here');
+require('web-components-scripture')
+```
+
+## Examples
+
+See [this page](https://jordan.shurmer.family/dev/scripture-web-components/) for examples.
 
 
 
