@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Scripture | Web Components</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans|Noto+Serif|Fira+Mono" rel="stylesheet">
+
+    <style>
+        main {
+            max-width: 640px;
+            margin: auto auto 10em;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        pre,
+        code {
+            font-family: 'Fira Mono', monospace;
+        }
+
+        body {
+            background-color: white;
+            font-family: 'Noto Sans', sans-serif;
+            font-weight: 400;
+            line-height: 1.45;
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 1.25em;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            margin: 2.75rem 0 1rem;
+            font-family: 'Noto Serif', serif;
+            font-weight: 400;
+            line-height: 1.15;
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 1.802em;
+        }
+
+        h2 {
+            font-size: 1.602em;
+        }
+
+        h3 {
+            font-size: 1.424em;
+        }
+
+        h4 {
+            font-size: 1.266em;
+        }
+
+        h5 {
+            font-size: 1.125em;
+        }
+
+        small,
+        .text_small {
+            font-size: 0.889em;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <main>
+
+        <h1>Table of Contents</h1>
+        <ul>
+            <li><a href="#scripture-passage"><code>scripture-passage</code></a></li>
+            <li><a href="#scripture-list"><code>scripture-list</code></a></li>
+        </ul>
+
+        <h1 id="scripture-passage">Scripture Passage</h1>
+
+        <scripture-passage api="crosswayApi" reference="Acts 17:24-25">
+        </scripture-passage>
+
+        <scripture-passage open api="crosswayApi" reference="2 Corinthians 10:17-18">
+        </scripture-passage>
+
+        <scripture-passage open api="crosswayApi" reference="Genesis 45:5-8, Genesis 50:20">
+        </scripture-passage>
+
+        <h1 id="scripture-list">Scripture List</h1>
+
+        <scripture-list api="crosswayApi" reference-list='["2 Timothy 1:9", "James 1:18"]'>
+        </scripture-list>
+
+    </main>
+
+    <script src="crossway.js"></script>
+    <script>
+        const crosswayApi = new Crossway('a0e122c0b20aee5601d9a6ea50e16194f5131eda');
+    </script>
+
+    <script src="scripture.js"></script>
+</body>
