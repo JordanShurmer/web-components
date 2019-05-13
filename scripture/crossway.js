@@ -22,7 +22,7 @@ class Crossway {
 
     linkTo(reference) {
         const aTag = document.createElement('a');
-        aTag.href = `//esv.to/${reference}`;
+        aTag.href = `http://esv.to/${reference}`;
         aTag.target = "_blank";
         return aTag;
     }
