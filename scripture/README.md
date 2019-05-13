@@ -1,6 +1,12 @@
 # Scripture Web Components
 
 
+![jsdelivr downloads](https://img.shields.io/jsdelivr/npm/hw/web-components-scripture.svg?logo=jsdelivr&style=for-the-badge)
+![npm](https://img.shields.io/npm/v/web-components-scripture.svg?logo=npm&style=for-the-badge)
+![npm downloads](https://img.shields.io/npm/dw/web-components-scripture.svg?logo=npm&style=for-the-badge)
+
+---
+
 This is a set of web components for dealing with Scripture passages (i.e. the Christian bible). These web components rely on the existence of an API for looking up scripture passages. An implementation which uses Crossway's ESV Api exists in [crossway.js](./crossway.js) (see [the api](#the-api) section for details). 
 
 ## Quick Look:
