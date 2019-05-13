@@ -61,7 +61,7 @@
             console.debug({
                 event
             });
-            if (this === event.path[0]) {
+            if (this === event.composedPath()[0]) {
                 this.open = !this.open;
                 this.shadowRoot.querySelectorAll('scripture-passage').forEach((passage) => {
                     passage.open = this.open
@@ -215,8 +215,8 @@
             if (!this.api) return; //maybe toggle the .open??
             console.group("mouseDown");
 
-            //only responde to left mouse click
-            if (event.button === 0 && 'SUMMARY' === event.path[0].tagName) {
+            //only responde to left mouse click on the <summary>
+            if (event.button === 0 && 'SUMMARY' === event.composedPath()[0].tagName) {
                 this.open = !this.open;
             }
             console.groupEnd();
