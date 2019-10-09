@@ -1,4 +1,26 @@
 (function () {
+    function debug() {
+        return localStorage.getItem('debug')
+            || ((new URL(document.location)).searchParams).get('debug')
+            || false;
+    }
+    function callIfDebug(method) {
+        return new Proxy(method, {
+            apply: function (target, thisArg, argumentsList) {
+                if (debug()) {
+                    target(...argumentsList);
+                }
+            }
+        });
+    }
+    for (let name in console) {
+        const method = console[name];
+        if (typeof method === 'function') {
+            console[name] = callIfDebug(method);
+        }
+    }
+
+
     const tmpl = document.createElement('template');
     tmpl.innerHTML = `<div></div>
     <style lang="css">
