@@ -59,11 +59,11 @@
         }
 
         connectedCallback() {
+            console.group("ScriptureList ConnectedCallback:");
+            const api = eval(this.getAttribute("api"));
+            this.addEventListener('click', this._click);
             if (!this.initted) {
-                console.group("ScriptureList ConnectedCallback:");
                 this.initted = true;
-                const api = eval(this.getAttribute("api"));
-                this.addEventListener('click', this._click);
                 for (let reference of this.referenceList) {
                     console.debug({
                         reference
@@ -78,8 +78,8 @@
                     });
                     this.shadowRoot.firstChild.appendChild(passage);
                 }
-                console.groupEnd();
             }
+            console.groupEnd();
         }
 
         _click(event) {
@@ -205,28 +205,28 @@
         }
 
         connectedCallback() {
+            console.group("ScripturePassage ConnectedCallback:");
+
+            if (!this.api && this.hasAttribute("api")) {
+                this.api = eval(this.getAttribute("api"));
+            }
+
+            this.passages = undefined;
+            if (this.open) {
+                this._query();
+            }
+            this.addEventListener('mousedown', this._mouseDown);
+
             if (!this.initted) {
-                console.group("ScripturePassage ConnectedCallback:");
                 this.initted = true;
-
-                if (!this.api && this.hasAttribute("api")) {
-                    this.api = eval(this.getAttribute("api"));
-                }
-
-                this.passages = undefined;
-                if (this.open) {
-                    this._query();
-                }
-                this.addEventListener('mousedown', this._mouseDown);
-
                 const summary = this.shadowRoot.querySelector('summary');
                 const contextLink = this.api.linkTo(this.reference);
                 contextLink.classList.add('context');
                 contextLink.innerText = ' see context';
                 summary.appendChild(contextLink);
-
-                console.groupEnd();
             }
+
+            console.groupEnd();
         }
 
         disconnectedCallback() {
