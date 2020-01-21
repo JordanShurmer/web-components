@@ -71,6 +71,7 @@
                     const passage = document.createElement('scripture-passage');
                     passage.api = api;
                     passage.reference = reference;
+                    passage.setAttribute("api", this.getAttribute("api"));
 
                     console.debug("Adding a new passage", {
                         passage,
