@@ -1,9 +1,10 @@
 (function () {
     function debug() {
-        return localStorage.getItem('debug')
-            || ((new URL(document.location)).searchParams).get('debug')
-            || false;
+        return localStorage.getItem('debug') ||
+            ((new URL(document.location)).searchParams).get('debug') ||
+            false;
     }
+
     function callIfDebug(method) {
         return new Proxy(method, {
             apply: function (target, thisArg, argumentsList) {
@@ -58,24 +59,27 @@
         }
 
         connectedCallback() {
-            console.group("ScriptureList ConnectedCallback:");
-            const api = eval(this.getAttribute("api"));
-            this.addEventListener('click', this._click);
-            for (let reference of this.referenceList) {
-                console.debug({
-                    reference
-                })
-                const passage = document.createElement('scripture-passage');
-                passage.api = api;
-                passage.reference = reference;
+            if (!this.initted) {
+                console.group("ScriptureList ConnectedCallback:");
+                this.initted = true;
+                const api = eval(this.getAttribute("api"));
+                this.addEventListener('click', this._click);
+                for (let reference of this.referenceList) {
+                    console.debug({
+                        reference
+                    })
+                    const passage = document.createElement('scripture-passage');
+                    passage.api = api;
+                    passage.reference = reference;
 
-                console.debug("Adding a new passage", {
-                    passage,
-                    "firstChild": this.shadowRoot.firstChild
-                });
-                this.shadowRoot.firstChild.appendChild(passage);
+                    console.debug("Adding a new passage", {
+                        passage,
+                        "firstChild": this.shadowRoot.firstChild
+                    });
+                    this.shadowRoot.firstChild.appendChild(passage);
+                }
+                console.groupEnd();
             }
-            console.groupEnd();
         }
 
         _click(event) {
@@ -201,25 +205,28 @@
         }
 
         connectedCallback() {
-            console.group("ScripturePassage ConnectedCallback:");
+            if (!this.initted) {
+                console.group("ScripturePassage ConnectedCallback:");
+                this.initted = true;
 
-            if (!this.api && this.hasAttribute("api")) {
-                this.api = eval(this.getAttribute("api"));
+                if (!this.api && this.hasAttribute("api")) {
+                    this.api = eval(this.getAttribute("api"));
+                }
+
+                this.passages = undefined;
+                if (this.open) {
+                    this._query();
+                }
+                this.addEventListener('mousedown', this._mouseDown);
+
+                const summary = this.shadowRoot.querySelector('summary');
+                const contextLink = this.api.linkTo(this.reference);
+                contextLink.classList.add('context');
+                contextLink.innerText = ' see context';
+                summary.appendChild(contextLink);
+
+                console.groupEnd();
             }
-
-            this.passages = undefined;
-            if (this.open) {
-                this._query();
-            }
-            this.addEventListener('mousedown', this._mouseDown);
-
-            const summary = this.shadowRoot.querySelector('summary');
-            const contextLink = this.api.linkTo(this.reference);
-            contextLink.classList.add('context');
-            contextLink.innerText = ' see context';
-            summary.appendChild(contextLink);
-
-            console.groupEnd();
         }
 
         disconnectedCallback() {
