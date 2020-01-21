@@ -229,10 +229,6 @@
             console.groupEnd();
         }
 
-        disconnectedCallback() {
-            this.api = null;
-        }
-
         _query() {
             return this.api.query(this.reference)
                 .then(passages => {
