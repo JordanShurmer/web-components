@@ -1,25 +1,19 @@
 (function () {
+    if (typeof document === "undefined") return;
+
     function debug() {
         return localStorage.getItem('debug') ||
             ((new URL(document.location)).searchParams).get('debug') ||
             false;
     }
 
-    function callIfDebug(method) {
-        return new Proxy(method, {
-            apply: function (target, thisArg, argumentsList) {
-                if (debug()) {
-                    target(...argumentsList);
-                }
-            }
-        });
-    }
-    for (let name in console) {
-        const method = console[name];
-        if (typeof method === 'function') {
-            console[name] = callIfDebug(method);
+    window.wc_log = {};
+    ['group', 'groupEnd', 'log', 'debug', 'info', 'warn', 'error', 'table'].forEach(method => {
+        wc_log[method] = function () {
+            if (debug()) console[method](arguments);
         }
-    }
+    });
+
 
 
     const tmpl = document.createElement('template');
@@ -50,42 +44,43 @@
     class ScriptureList extends HTMLElement {
         constructor() {
             super();
-            console.group("ScriptureList Constructor:");
+            wc_log.group("ScriptureList Constructor:");
             this.attachShadow({
                 mode: 'open'
             });
             this.shadowRoot.appendChild(tmpl.content.cloneNode(true));
-            console.groupEnd();
+            wc_log.groupEnd();
         }
 
         connectedCallback() {
-            console.group("ScriptureList ConnectedCallback:");
+            wc_log.group("ScriptureList ConnectedCallback:");
             const api = eval(this.getAttribute("api"));
             this.addEventListener('click', this._click);
             if (!this.initted) {
                 this.initted = true;
                 for (let reference of this.referenceList) {
-                    console.debug({
+                    wc_log.debug({
                         reference
                     })
                     const passage = document.createElement('scripture-passage');
                     passage.api = api;
                     passage.reference = reference;
                     passage.setAttribute("api", this.getAttribute("api"));
+                    passage.setAttribute("reference", reference);
 
-                    console.debug("Adding a new passage", {
+                    wc_log.debug("Adding a new passage", {
                         passage,
                         "firstChild": this.shadowRoot.firstChild
                     });
                     this.shadowRoot.firstChild.appendChild(passage);
                 }
             }
-            console.groupEnd();
+            wc_log.groupEnd();
         }
 
         _click(event) {
-            console.group("ScriptureList click");
-            console.debug({
+            wc_log.group("ScriptureList click");
+            wc_log.debug({
                 event
             });
             if (this === event.composedPath()[0]) {
@@ -94,7 +89,7 @@
                     passage.open = this.open
                 });
             }
-            console.groupEnd();
+            wc_log.groupEnd();
         }
 
         get referenceList() {
@@ -102,7 +97,7 @@
             try {
                 list = JSON.parse(list);
             } catch (err) {
-                console.error("scripture-list: could not be parse", {
+                wc_log.error("scripture-list: could not be parse", {
                     list,
                     err
                 })
@@ -135,6 +130,7 @@
 })();
 
 (function () {
+    if (typeof document === "undefined") return;
     const styleString = `
     <style>
         :host {
@@ -190,8 +186,8 @@
 
         constructor() {
             super();
-            console.group("ScripturePassage Constructor:");
-            console.debug(this);
+            wc_log.group("ScripturePassage Constructor:");
+            wc_log.debug(this);
             const template = document.createElement('template');
             template.innerHTML += `
                 ${styleString}
@@ -202,11 +198,11 @@
                 mode: 'open'
             });
             this.shadowRoot.appendChild(template.content.cloneNode(true));
-            console.groupEnd();
+            wc_log.groupEnd();
         }
 
         connectedCallback() {
-            console.group("ScripturePassage ConnectedCallback:");
+            wc_log.group("ScripturePassage ConnectedCallback:");
 
             if (!this.api && this.hasAttribute("api")) {
                 this.api = eval(this.getAttribute("api"));
@@ -221,13 +217,14 @@
             if (!this.initted) {
                 this.initted = true;
                 const summary = this.shadowRoot.querySelector('summary');
+                summary.textContent = this.reference;
                 const contextLink = this.api.linkTo(this.reference);
                 contextLink.classList.add('context');
                 contextLink.innerText = ' see context';
                 summary.appendChild(contextLink);
             }
 
-            console.groupEnd();
+            wc_log.groupEnd();
         }
 
         _query() {
@@ -239,13 +236,13 @@
 
         _mouseDown(event) {
             if (!this.api) return; //maybe toggle the .open??
-            console.group("mouseDown");
+            wc_log.group("mouseDown");
 
             //only responde to left mouse click on the <summary>
             if (event.button === 0 && 'SUMMARY' === event.composedPath()[0].tagName) {
                 this.open = !this.open;
             }
-            console.groupEnd();
+            wc_log.groupEnd();
         }
 
 
